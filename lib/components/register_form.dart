@@ -28,6 +28,7 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           TextFormField(
+            key: Key('fieldRegName'),
             decoration: const InputDecoration(labelText: 'First name'),
             validator: (value) {
               if (value == '') return 'Введите имя';
@@ -35,6 +36,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           TextFormField(
+            key: Key('fieldRegLastName'),
             decoration: const InputDecoration(labelText: 'Last name'),
             validator: (value) {
               if (value == '') return 'Введите фамилию';
@@ -42,6 +44,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           TextFormField(
+            key: const Key('fieldRegPhone'),
             keyboardType: TextInputType.number,
 
             // inputFormatters: <TextInputFormatter>[
@@ -55,6 +58,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           TextFormField(
+            key: const Key('fieldRegEmail'),
             decoration: const InputDecoration(labelText: 'Email'),
             validator: (value) {
               if (value == '') return 'Заполните поле email';
@@ -63,7 +67,9 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           ElevatedButton(
-              onPressed: _handleSubmit, child: const Text('Отправить')),
+              key: const Key('btmRegistr'),
+              onPressed: _handleSubmit,
+              child: const Text('Регистрация')),
           if (_isSuccess) const Text('Вы успешно зарегистрировались')
         ],
       ),
