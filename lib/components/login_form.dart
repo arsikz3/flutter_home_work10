@@ -33,16 +33,12 @@ class _LoginFormState extends State<LoginForm> {
           ),
           TextFormField(
             key: const Key('fieldPhone'),
-
             validator: (value) {
               if (value == '') return 'Введите телефон';
               return null;
             },
             decoration: const InputDecoration(labelText: 'Phone'),
             keyboardType: TextInputType.number,
-            // inputFormatters: <TextInputFormatter>[
-            //   WhitelistingTextInputFormatter.digitsOnly
-            // ],
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           ElevatedButton(

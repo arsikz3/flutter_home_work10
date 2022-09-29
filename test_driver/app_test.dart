@@ -1,6 +1,5 @@
 @Timeout(Duration(seconds: 180))
 
-// Imports the Flutter Driver API.
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'package:test/test.dart';
@@ -11,8 +10,6 @@ void main() {
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-      //driver = await FlutterDriver.connect(
-      //    dartVmServiceUrl: 'http://127.0.0.1:54270');
     });
 
     tearDownAll(() async {
@@ -40,7 +37,6 @@ void main() {
       await driver?.tap(filedFinderPhone);
       await driver?.waitFor(find.text(''));
       await driver?.enterText('87053776597');
-      //await driver?.waitFor(find.text('87777777777'));
     });
 
     test('Test phone field', () async {
@@ -51,8 +47,7 @@ void main() {
       final success = find.text('Добро пожаловать');
       expect(await driver?.getText(success), 'Добро пожаловать');
     });
-  }); //, timeout: const Timeout(Duration(minutes: 1)));
-
+  });
   group('Rigister form tests', () {
     FlutterDriver? driver;
 
