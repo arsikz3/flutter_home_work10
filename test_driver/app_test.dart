@@ -1,107 +1,121 @@
 @Timeout(Duration(seconds: 180))
 
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:flutter_home_work10/utils/validate_email.dart';
 
 import 'package:test/test.dart';
 
 void main() {
-  group('Lkogin form tests', () {
-    FlutterDriver? driver;
+  group('Login form tests', () {
+    late FlutterDriver driver;
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
     });
 
     tearDownAll(() async {
-      if (driver != null) {
-        // ignore: avoid_print
-        driver?.close();
+      await driver.close();
+    });
+
+    final fieldFinderEmail = find.byValueKey('authEmailKey');
+    final fieldFinderPhone = find.byValueKey('authPhoneKey');
+    final fieldFinderSubmit = find.text('Отправить');
+    const email = 'text@text.';
+
+    test('emailLoginTest', () async {
+      await driver.tap(fieldFinderEmail);
+      await driver.waitFor(find.text(''));
+      await driver.enterText(email);
+    });
+
+    test('phoneLoginTest', () async {
+      await driver.tap(fieldFinderPhone);
+      await driver.waitFor(find.text(''));
+      await driver.enterText('2');
+    });
+
+    test('submitLoginTest', () async {
+      await driver.tap(fieldFinderSubmit);
+      if (validateEmail(email)) {
+        await driver.waitFor(find.text('Добро пожаловать'));
+      } else {
+        await driver.waitFor(find.text('Поле email заполнено не корректно'));
       }
-    });
-
-    final filedFinderEmail = find.byValueKey('fieldEmail');
-    final filedFinderPhone = find.byValueKey('fieldPhone');
-    final filedFinderSubmit = find.text('Отправить');
-
-    test(
-      'Test email field',
-      () async {
-        await driver?.tap(filedFinderEmail);
-        await driver?.waitFor(find.text(''));
-        await driver?.enterText('test@test.com');
-        await driver?.waitFor(find.text('test@test.com'));
-      },
-    );
-
-    test('Test phone field', () async {
-      await driver?.tap(filedFinderPhone);
-      await driver?.waitFor(find.text(''));
-      await driver?.enterText('87053776597');
-    });
-
-    test('Test phone field', () async {
-      await driver?.tap(filedFinderSubmit);
-    });
-
-    test('Success text', () async {
-      final success = find.text('Добро пожаловать');
-      expect(await driver?.getText(success), 'Добро пожаловать');
     });
   });
-  group('Rigister form tests', () {
-    FlutterDriver? driver;
+
+  group('switchFormTest', () {
+    late FlutterDriver driver;
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
     });
 
     tearDownAll(() async {
-      if (driver != null) {
-        driver?.close();
+      await driver.close();
+    });
+
+    test('switchFormTest', () async {
+      final fieldFinderChangeField = find.byValueKey('switchFormKey');
+      final fieldFinderSubmit = find.text('Отправить');
+      await driver.tap(fieldFinderChangeField);
+      await driver.tap(fieldFinderSubmit);
+      await driver.waitFor(find.text('Введите имя'));
+      await driver.waitFor(find.text('Введите фамилию'));
+      await driver.waitFor(find.text('Заполните поле телефон'));
+      await driver.waitFor(find.text('Заполните поле email'));
+    });
+  });
+
+  group('Register form tests', () {
+    late FlutterDriver driver;
+
+    setUpAll(() async {
+      driver = await FlutterDriver.connect();
+    });
+
+    tearDownAll(() async {
+      driver.close();
+    });
+
+    final fieldFinderFirstName = find.byValueKey('firstNameKey');
+    final fieldFinderLastName = find.byValueKey('lastNameKey');
+    final fieldFinderPhone = find.byValueKey('regPhoneKey');
+    final fieldFinderEmail = find.byValueKey('regEmailKey');
+    final fieldFinderSubmit = find.text('Отправить');
+    const email = 'text@text.';
+
+    test('regEmailTest', () async {
+      await driver.tap(fieldFinderEmail);
+      await driver.waitFor(find.text(''));
+      await driver.enterText(email);
+    });
+
+    test('regPhoneTest', () async {
+      await driver.tap(fieldFinderPhone);
+      await driver.waitFor(find.text(''));
+      await driver.enterText('2');
+    });
+
+    test('regFirstNameTest', () async {
+      await driver.tap(fieldFinderFirstName);
+      await driver.waitFor(find.text(''));
+      await driver.enterText('1');
+    });
+
+    test('regFirstNameTest', () async {
+      await driver.tap(fieldFinderLastName);
+      await driver.waitFor(find.text(''));
+      await driver.enterText('2');
+    });
+
+    test('regSubmitTest', () async {
+      await driver.tap(fieldFinderSubmit);
+      if (validateEmail(email)) {
+        await driver.waitFor(find.text('Вы успешно зарегистрировались'));
+      } else {
+        await driver.waitFor(find.text('Емейл не корректный'));
       }
-    });
-
-    final filedFinderFirstName = find.byValueKey('fieldRegName');
-    final filedFinderLastName = find.byValueKey('fieldRegLastName');
-    final filedFinderRegEmail = find.byValueKey('fieldRegEmail');
-    final filedFinderRegPhone = find.byValueKey('fieldRegPhone');
-    final filedFinderRegSubmit = find.byValueKey('btmRegistr');
-
-    test('Test firstName field', () async {
-      await driver?.tap(filedFinderFirstName);
-      await driver?.waitFor(find.text(''));
-      await driver?.enterText('UserName');
-      await driver?.waitFor(find.text('UserName'));
-    });
-
-    test('Test lastName field', () async {
-      await driver?.tap(filedFinderLastName);
-      await driver?.waitFor(find.text(''));
-      await driver?.enterText('Unknown');
-      await driver?.waitFor(find.text('Unknown'));
-    });
-
-    test('Test email field', () async {
-      await driver?.tap(filedFinderRegEmail);
-      await driver?.waitFor(find.text(''));
-      await driver?.enterText('test@test.com');
-      await driver?.waitFor(find.text('test@test.com'));
-    });
-
-    test('Test phone field', () async {
-      await driver?.tap(filedFinderRegPhone);
-      await driver?.waitFor(find.text(''));
-      await driver?.enterText('89787777777');
-      await driver?.waitFor(find.text('89787777777'));
-    });
-
-    test('Test phone field', () async {
-      await driver?.tap(filedFinderRegSubmit);
-    });
-
-    test('Success Reg text', () async {
-      final success = find.text('Вы успешно зарегистрировались');
-      expect(await driver?.getText(success), 'Вы успешно зарегистрировались');
     });
   });
 }

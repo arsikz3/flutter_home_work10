@@ -17,3 +17,11 @@ samples, guidance on mobile development, and a full API reference.
 
 
 for test: 
+1. run test
+flutter drive --target=./test_driver/app.dart  
+
+2.
+flutter test --coverage
+3.
+ perl genhtml coverage/lcov.info -o coverage/html
+ perl genhtml coverage/lcov.info -o coverage/html
