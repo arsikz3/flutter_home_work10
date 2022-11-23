@@ -1,2 +1,3 @@
 *.html linguist-detectable=false
 *.pl linguist-detectable=false
+*.perl linguist-detectable=false
